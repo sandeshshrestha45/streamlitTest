@@ -40,6 +40,7 @@ def main():
         image1 = Image.open(img_file1)
         image1_np = np.array(image1)
         st.image(image1, caption='Captured Image 1', use_column_width=True)
+        st.write(image1_np.shape)
         
         # Perform barcode detection on the first image
         barcode_info1 = detect_barcode(image1_np)
@@ -67,7 +68,9 @@ def main():
             image2 = Image.open(img_file2)
             image2_np = np.array(image2)
             st.image(image2, caption='Captured Image 2', use_column_width=True)
-            
+
+            st.write(image2_np.shape)
+
             # Perform barcode detection on the second image
             barcode_info2 = detect_barcode(image2_np)
             
@@ -94,6 +97,8 @@ def main():
                 image3 = Image.open(img_file3)
                 image3_np = np.array(image3)
                 st.image(image3, caption='Captured Image 3', use_column_width=True)
+
+                st.write(image1_np.shape)
                 
                 # Perform OCR on the third image
                 ocr_text = perform_ocr(image3_np)
