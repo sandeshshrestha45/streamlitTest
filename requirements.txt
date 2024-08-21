@@ -1,7 +1,7 @@
-pip==24.2
-numpy==1.23.5
+streamlit
+numpy
 opencv-python==4.10.0.84
-pyzbar==0.1.9
-easyocr==1.7.1
-streamlit==1.37.1
+pyzbar
+easyocr
 setuptools
+wheel
