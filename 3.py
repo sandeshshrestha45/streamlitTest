@@ -40,8 +40,7 @@ def main():
         image1 = Image.open(img_file1)
         image1_np = np.array(image1)
         st.image(image1, caption='Captured Image 1', use_column_width=True)
-        st.write(image1_np.shape)
-        
+                
         # Perform barcode detection on the first image
         barcode_info1 = detect_barcode(image1_np)
         
@@ -58,7 +57,7 @@ def main():
         #         f.write(info + '\n')
 
         # st.write("Barcode information for Image 1 saved to 'barcode_info1.txt'.")
-        
+        st.write(image1_np.shape)
         # Capture second image
         st.write("Click the button to capture the second image.")
         img_file2 = st.camera_input("Capture Second Image")
@@ -69,8 +68,7 @@ def main():
             image2_np = np.array(image2)
             st.image(image2, caption='Captured Image 2', use_column_width=True)
 
-            st.write(image2_np.shape)
-
+            
             # Perform barcode detection on the second image
             barcode_info2 = detect_barcode(image2_np)
             
@@ -87,8 +85,9 @@ def main():
             #         f.write(info + '\n')
 
             # st.write("Barcode information for Image 2 saved to 'barcode_info2.txt'.")
-        
+            
             # Capture third image
+            st.write(image2_np.shape)
             st.write("Click the button to capture the third image.")
             img_file3 = st.camera_input("Capture Third Image")
             
@@ -109,7 +108,7 @@ def main():
                         st.write(text)
                 else:
                     st.write("No text detected in Image 3.")
-                
+                st.write(image3_np.shape)
                 # Save OCR information for the third image
                 # with open('ocr_info3.txt', 'w') as f:
                 #     for text in ocr_text:
