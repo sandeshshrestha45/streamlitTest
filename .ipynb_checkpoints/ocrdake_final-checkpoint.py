@@ -14,7 +14,7 @@ def perform_ocr(image):
     """Perform OCR on the upscaled image and return the extracted text."""
     reader = easyocr.Reader(['en'])
     results = reader.readtext(image, allowlist='0123456789')
-    ocr_text = [result[1] for result in results]
+    ocr_text = [result[1] for result in results if len(result[1]) >= 4]
     return ocr_text
 
 def main():
