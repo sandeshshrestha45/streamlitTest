@@ -65,7 +65,7 @@ def main():
         
         # Add the second last element of the third OCR result
         if len(st.session_state.ocr_results[2]) >= 2:
-            results.append(st.session_state.ocr_results[2][-2][-7:])
+            results.append(st.session_state.ocr_results[2][1][-7:])
         else:
             results.append('N/A')
 
