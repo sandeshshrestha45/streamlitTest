@@ -1,2 +1,2 @@
 # streamlitTest
-run ocrdake_final.py 
+run ocrdake_final.py # HirakataOCR
