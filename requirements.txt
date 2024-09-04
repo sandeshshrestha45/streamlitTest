@@ -5,3 +5,6 @@ pyzbar
 easyocr
 setuptools
 wheel
+Pillow
+gspread
+oauth2client
