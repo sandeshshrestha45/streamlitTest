@@ -6,6 +6,25 @@ import easyocr
 from datetime import datetime
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from the .env file
+load_dotenv()
+# Now access the environment variables
+project_id = os.getenv('GCP_PROJECT_ID')
+private_key_id = os.getenv('GCP_PRIVATE_KEY_ID')
+private_key = os.getenv('GCP_PRIVATE_KEY')
+client_email = os.getenv('GCP_CLIENT_EMAIL')
+client_id = os.getenv('GCP_CLIENT_ID')
+client_x509_cert_url = os.getenv('GCP_CLIENT_X509_CERT_URL')
+# print(os.getenv('GCP_PROJECT_ID'))
+# print(os.getenv('GCP_PRIVATE_KEY_ID'))
+# print(os.getenv('GCP_PRIVATE_KEY'))
+# print(os.getenv('GCP_CLIENT_EMAIL'))
+# print(os.getenv('GCP_CLIENT_ID'))
+# print(os.getenv('GCP_CLIENT_X509_CERT_URL'))
+
 
 def upscale_image(image, scale_factor=2):
     height, width = image.shape[:2]
@@ -19,26 +38,53 @@ def perform_ocr(image):
     return ocr_text
 
 # def connect_to_google_sheets(sheet_name):
-#     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-#     creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+#     required_vars = [
+#         "GCP_PROJECT_ID", "GCP_PRIVATE_KEY_ID", "GCP_PRIVATE_KEY",
+#         "GCP_CLIENT_EMAIL", "GCP_CLIENT_ID", "GCP_CLIENT_X509_CERT_URL"
+#     ]
+    
+#     for var in required_vars:
+#         if os.getenv(var) is None:
+#             raise ValueError(f"Environment variable {var} is not set.")
+    
+#     creds_json = {
+#         "type": "service_account",
+#         "project_id": os.getenv("GCP_PROJECT_ID"),
+#         "private_key_id": os.getenv("GCP_PRIVATE_KEY_ID"),
+#         "private_key": os.getenv("GCP_PRIVATE_KEY"),#.replace('\\n', '\n'),
+#         "client_email": os.getenv("GCP_CLIENT_EMAIL"),
+#         "client_id": os.getenv("GCP_CLIENT_ID"),
+#         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+#         "token_uri": "https://oauth2.googleapis.com/token",
+#         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+#         "client_x509_cert_url": os.getenv("GCP_CLIENT_X509_CERT_URL")
+#     }
+#     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_json)
 #     client = gspread.authorize(creds)
 #     return client.open(sheet_name).sheet1
 
 def connect_to_google_sheets(sheet_name):
-    # Load credentials from environment variables
+    required_vars = [
+        "GCP_PROJECT_ID", "GCP_PRIVATE_KEY_ID", "GCP_PRIVATE_KEY",
+        "GCP_CLIENT_EMAIL", "GCP_CLIENT_ID", "GCP_CLIENT_X509_CERT_URL"
+    ]
+    
+    for var in required_vars:
+        if os.getenv(var) is None:
+            raise ValueError(f"Environment variable {var} is not set.")
+    
     creds_json = {
         "type": "service_account",
-        "project_id": os.getenv("GCP_PROJECT_ID"),
-        "private_key_id": os.getenv("GCP_PRIVATE_KEY_ID"),
-        "private_key": os.getenv("GCP_PRIVATE_KEY").replace('\\n', '\n'),
-        "client_email": os.getenv("GCP_CLIENT_EMAIL"),
-        "client_id": os.getenv("GCP_CLIENT_ID"),
+        "project_id": project_id,
+        "private_key_id": private_key_id,
+        "private_key": private_key,
+        "client_email": client_email,
+        "client_id": client_id,
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": os.getenv("GCP_CLIENT_X509_CERT_URL")
+        "client_x509_cert_url": client_x509_cert_url
     }
-    
     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_json)
     client = gspread.authorize(creds)
     return client.open(sheet_name).sheet1
